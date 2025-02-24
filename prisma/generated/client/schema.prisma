@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             Json             @id @unique
+  username       String?
+  isComplet      Boolean          @default(false)
+  phone          Json?
+  pdf_url        String
+  userImage      String
+  joinDate       DateTime?        @default(now())
+  email          Json
+  isAccepted     Boolean          @default(false)
+  Post           Post[]
+  JobApplication JobApplication[]
+}
+
+model Post {
+  id             String           @id @default(cuid())
+  title          String
+  content        String
+  Location       String
+  Branch         String
+  publisher_is   Json
+  JobApplication JobApplication[]
+  created_at     DateTime         @default(now())
+  publisher      User             @relation(fields: [publisher_is], references: [id])
+}
+
+model JobApplication {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Json
+  job       Post     @relation(fields: [jobId], references: [id])
+  jobId     String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, jobId])
+}
