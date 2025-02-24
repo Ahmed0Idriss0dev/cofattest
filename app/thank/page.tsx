@@ -5,9 +5,7 @@ const page = async () => {
   await FetchUserDb()
   redirect('/Profile')
   return (
-    <>
-    waite .....
-    </>
+    <div className=""></div>
   ) 
 }
 
