@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev ",
-    "build": " npx prisma generate && npx  prisma migrate deploy && next build",
+    "build": "  prisma generate &&   prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "npx prisma generate"
-  },
+    "postinstall": "prisma generate"
+    },
   "dependencies": {
     "@clerk/elements": "^0.22.19",
     "@clerk/nextjs": "^6.10.6",
